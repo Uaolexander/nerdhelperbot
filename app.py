@@ -3,7 +3,7 @@ import os
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, MessageHandler, CallbackQueryHandler, filters, ContextTypes
 
-# Токен бота (або бери з змінної середовища)
+# Токен бота (читається з змінної середовища або заданий за замовчуванням)
 TOKEN = os.environ.get("TOKEN", "7667222068:AAHIp4IJn9GXDkSrgy8D3XiRqxfG3K-fuGQ")
 
 # Твій Telegram ID
@@ -50,13 +50,8 @@ def create_cancel_button():
 # Статус користувача
 user_states = {}
 
-# Команда /start (з додатковим повідомленням)
+# Команда /start (оновлена з гіперпосиланням і без прев’ю)
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user_id = update.message.from_user.id
-    # Скидаємо статус користувача при старті
-    if user_id in user_states and user_states[user_id] == "locked":
-        del user_states[user_id]
-   async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.message.from_user.id
     # Скидаємо статус користувача при старті
     if user_id in user_states and user_states[user_id] == "locked":
@@ -69,10 +64,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         parse_mode="Markdown",
         disable_web_page_preview=True,  # Прибираємо прев’ю посилання
         reply_markup=create_register_button()
-    )
-    await update.message.reply_text(
-        "*Я чекаю на твоє запитання😊 👇*",
-        parse_mode="Markdown"
     )
     await update.message.reply_text(
         "*Я чекаю на твоє запитання😊 👇*",
