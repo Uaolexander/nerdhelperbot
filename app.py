@@ -56,13 +56,23 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Скидаємо статус користувача при старті
     if user_id in user_states and user_states[user_id] == "locked":
         del user_states[user_id]
+   async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.message.from_user.id
+    # Скидаємо статус користувача при старті
+    if user_id in user_states and user_states[user_id] == "locked":
+        del user_states[user_id]
     await update.message.reply_text(
         "👋 Привіт! Я — *NerdHelperBot*. Допомагаю вивчати англійську разом! 😊\n\n"
-        "📌 Ми обираємо *найцікавіші* питання і відповідаємо на них у каналі EnglishNerd — підпишись, щоб дізнаватися більше! "
+        "📌 Ми обираємо *найцікавіші* питання і відповідаємо на них у каналі [EnglishNerd](https://t.me/englishnerd) — підпишись, щоб дізнаватися більше! "
         "На всі питання відповідаємо не одразу, але ми стараємося! 💡\n\n"
         "📝 Ти можеш надсилати *текст*, *фото* чи *відео* з питаннями. Натисни кнопку нижче!",
         parse_mode="Markdown",
+        disable_web_page_preview=True,  # Прибираємо прев’ю посилання
         reply_markup=create_register_button()
+    )
+    await update.message.reply_text(
+        "*Я чекаю на твоє запитання😊 👇*",
+        parse_mode="Markdown"
     )
     await update.message.reply_text(
         "*Я чекаю на твоє запитання😊 👇*",
